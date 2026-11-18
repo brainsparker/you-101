@@ -41,7 +41,12 @@ req = urllib.request.Request(
             "source_control": {"include_domains": [domain]},
         }
     ).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 

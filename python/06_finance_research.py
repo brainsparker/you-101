@@ -36,7 +36,12 @@ print("Finance research (deep effort, can take ~1-2 minutes)...", file=sys.stder
 req = urllib.request.Request(
     "https://api.you.com/v1/finance_research",
     data=json.dumps({"input": question, "research_effort": "deep"}).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 

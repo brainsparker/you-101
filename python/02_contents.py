@@ -31,7 +31,12 @@ if not urls:
 req = urllib.request.Request(
     "https://api.you.com/v1/contents",
     data=json.dumps({"urls": urls}).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 
