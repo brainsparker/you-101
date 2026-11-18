@@ -34,7 +34,12 @@ print("Researching (standard effort, ~10-30s)...", file=sys.stderr)
 req = urllib.request.Request(
     "https://api.you.com/v1/research",
     data=json.dumps({"input": question, "research_effort": "standard"}).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 

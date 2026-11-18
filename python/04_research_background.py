@@ -34,7 +34,12 @@ submit = urllib.request.Request(
     data=json.dumps(
         {"input": question, "research_effort": "deep", "background": True}
     ).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 with urllib.request.urlopen(submit, timeout=60) as res:
@@ -48,7 +53,11 @@ while True:
     time.sleep(3)
     poll = urllib.request.Request(
         f"https://api.you.com/v1/research/{task['task_id']}",
-        headers={"x-api-key": key},
+        headers={
+            "x-api-key": key,
+            # api.you.com answers urllib's default User-Agent with a 403.
+            "user-agent": "you-101",
+        },
     )
     with urllib.request.urlopen(poll, timeout=60) as res:
         detail = json.load(res)

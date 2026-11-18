@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
-"""Chapter 2: Clean page content.
+"""Chapter 2 (legacy): Clean page content with the Contents API.
 
 POST /v1/contents fetches one or more URLs and returns clean content
-(no nav, no ads): the "read the page" primitive for RAG pipelines and
-agents.
+(no nav, no ads). It still works, but the Extract API replaced it in
+November 2026 and it will not get new features. New code should start
+from 02_extract.py. This file stays for anyone maintaining an existing
+Contents integration: up to 10 URLs per request, and the response is an
+array of pages.
 
 Run:  python3 02_contents.py https://you.com/docs [more urls...]
 Docs: https://you.com/docs/api-reference/contents
@@ -28,7 +31,12 @@ if not urls:
 req = urllib.request.Request(
     "https://api.you.com/v1/contents",
     data=json.dumps({"urls": urls}).encode(),
-    headers={"content-type": "application/json", "x-api-key": key},
+    headers={
+        "content-type": "application/json",
+        "x-api-key": key,
+        # api.you.com answers urllib's default User-Agent with a 403.
+        "user-agent": "you-101",
+    },
     method="POST",
 )
 
