@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 /**
- * Chapter 2: Clean page content.
+ * Chapter 2 (legacy): Clean page content with the Contents API.
  *
  * POST /v1/contents fetches one or more URLs and returns clean content
- * (no nav, no ads): the "read the page" primitive for RAG pipelines and
- * agents.
+ * (no nav, no ads). It still works, but the Extract API replaced it in
+ * November 2026 and it will not get new features. New code should start
+ * from 02-extract.mjs. This file stays for anyone maintaining an existing
+ * Contents integration: up to 10 URLs per request, and the response is an
+ * array of pages.
  *
  * Run:  node 02-contents.mjs https://you.com/docs [more urls...]
  * Docs: https://you.com/docs/api-reference/contents
